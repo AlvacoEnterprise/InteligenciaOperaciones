@@ -106,7 +106,7 @@ body {
 
 /* Colores derivados del azul para cada pestaña */ 
 .tab-link.blue-1 { 
-    background: #1E3A8A; 
+    background: #1e3a8a; 
     color: #e6f4ea; 
 } 
 .tab-link.blue-2 { 
@@ -147,7 +147,11 @@ body {
 } 
 .tab-link.blue-11 { 
     background: #BCE5FF; 
-    color: #1f2937; 
+    color: #0d1116; 
+}
+.tab-link.blue-12 { 
+    background: #9bd8ff; 
+    color: #08090e; 
 }
 
 /*  NAVBAR SUPERIOR  */
