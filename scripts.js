@@ -1,58 +1,46 @@
-const toggle = document.querySelector(".menu-toggle");
-const sidebar = document.querySelector(".sidebar");
-const tabs = document.querySelectorAll(".tab-link");
-const contents = document.querySelectorAll(".tab-content");
-const pageTitle = document.querySelector(".page-title");
+document.addEventListener('DOMContentLoaded', () => {
+    const sidebar = document.getElementById('sidebar');
+    const menuBtn = document.getElementById('menuBtn');
+    const tabs = document.querySelectorAll('.tab-link');
+    const contents = document.querySelectorAll('.tab-content');
+    const pageTitle = document.querySelector('.page-title');
 
-function updatePageTitle() {
-    const activeTab = document.querySelector(".tab-link.active");
-    if (activeTab && pageTitle) {
-        const tabText = activeTab.textContent.trim();
-        pageTitle.textContent = tabText;
-    }
-}
+    window.showTab = function(tabId, title) {
+        // Ocultar contenidos y quitar estados activos
+        contents.forEach(content => content.classList.remove('active'));
+        tabs.forEach(tab => tab.classList.remove('active'));
 
-updatePageTitle();
+        // Activar el nuevo contenido
+        const targetContent = document.getElementById(tabId);
+        const targetTab = document.querySelector(`[data-tab="${tabId}"]`);
 
-tabs.forEach(tab => {
-    tab.addEventListener("click", () => {
-        tabs.forEach(t => t.classList.remove("active"));
-        contents.forEach(c => c.classList.remove("active"));
+        if (targetContent) targetContent.classList.add('active');
+        if (targetTab) targetTab.classList.add('active');
+        
+        // Cambiar título superior
+        if (title) pageTitle.innerText = title;
 
-        tab.classList.add("active");
-        const contentId = tab.dataset.tab;
-        document.getElementById(contentId).classList.add("active");
+        // Resetear el scroll del contenedor principal al cambiar de pestaña
+        document.querySelector('.main-body').scrollTop = 0;
 
-        updatePageTitle();
-
-        if (window.innerWidth <= 768 && sidebar.classList.contains("show")) {
-            sidebar.classList.remove("show");
+        // Cerrar menú móvil
+        if (window.innerWidth <= 1024) {
+            sidebar.classList.remove('active');
         }
+    };
+
+    // Asignar eventos a los links laterales
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            if (this.tagName === 'A') return; // Evitar que el buscador interfiera
+            const tabId = this.getAttribute('data-tab');
+            const title = this.innerText.trim();
+            showTab(tabId, title);
+        });
+    });
+
+    // Toggle del menú hamburguesa
+    menuBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
     });
 });
-
-if (toggle) {
-    toggle.addEventListener("click", () => {
-        if (window.innerWidth <= 768) {
-            sidebar.classList.toggle("show");
-        } else {
-            sidebar.classList.toggle("collapsed");
-        }
-    });
-}
-
-function handleResize() {
-    if (window.innerWidth <= 768) {
-        sidebar.classList.remove("collapsed");
-        sidebar.classList.remove("show");
-    } else if (window.innerWidth <= 1024) {
-        sidebar.classList.add("collapsed");
-        sidebar.classList.remove("show");
-    } else {
-        sidebar.classList.remove("collapsed");
-        sidebar.classList.remove("show");
-    }
-}
-
-window.addEventListener("resize", handleResize);
-window.addEventListener("load", handleResize);

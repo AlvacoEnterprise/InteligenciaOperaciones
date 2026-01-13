@@ -1,414 +1,192 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu</title>
+    <title>Inteligencia de Operaciones</title>
 
-    <!-- Icono de la pestaña -->
-    <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAA/FBMVEVHcEyamZz29/emqK+Jh4mysbK/vsDMzM/b291+fH7V1df3+PmxsLO1tLlycXTi4+Xw8O7h4eNzcnVxcHP29/b29vUdKk17gI8HHEYSIklzd4YZMFkHRIn+/v4KUZcUN2Q7RWKlpq6Pkp9sb38CKFsEdLowOlj7wAYAEUKYmqNmaneEiJWapLZbX3ABWqMDa7A+XYgBMmddbYlMVG1ne5rN2efAw8qtr7bGztyyucSOmaxHTGKfrcUKP3Z0g50rRm+ClK//66oAADrz58aXut1BbqV7q9UdY6NZkMVZfrHv8PP9zy5rns6Npsx3lLsjgsPirQ730lT1yEOxppF/gagWAAAAFnRSTlMA7Dv3Szud5vS/6UsY4u+dv7/v752dSino+wAAAf1JREFUOI29kllT2zAUhZMMJCEZoNDWshTL+77vduw4+06htP3//6UK40AIvLZn9KCZ8+ke6eo2Gv9Vre+9dDhMO+3LT+1+t/Bj27aLMALNi4/+l+lqNNqxTFWFosWjq3O/64+mruuyTBIGAYec6P7MZ4cbj8jdrfOA42Te5G/e1feHrnKQmyvLmBAD1YxOUvrT0UZRtslitkjWPxOZAAPekd5u2l1NPWWLZw/a752nLMcBAaCkNl/fX4xYz8MzTdMkZvVSYjCgKISO/fjm26z74+A/M/kj660tmQAQlO0a6MUx6y4fCPAH+wz7pCT0AXCi6xpIC4ZlH39p2gxPAj8n1USZRKhAqIGhXTHsZvG8wBPZ35P9KtEpiqLFNyCoGGa0wBI9IUycsFuDPgXSYlJVlY2zub7HeY4JnR9KWFkNdMKQ4yYYS6iLifbj6dNSoKFjdmqgHYky54/jMVlxCJAFAJAgLfK3NXAJrAEn+3YIUh3k80xChiVB3bBax1Y2eSTLRjcEhS2lojHPVD2do/KY0GhcSA6vknMCn4F5JiDTEEvKAP2377yKTBVCmqZoSOk6DWldF9S704G4IRMCqVfRlED13o/U19KRIHxhyHlkqGc+SZFUBByVxDiiUYK7c5/ctInKCIiiZfJWp//RP/SjfS0IQta5bX1q/zP9BQ3ZVAkui7P6AAAAAElFTkSuQmCC" type="image/png">
-
-    <!-- Fuente e íconos -->
+    <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAA/FBMVEVHcEyamZz29/emqK+Jh4mysbK/vsDMzM/b291+fH7V1df3+PmxsLO1tLlycXTi4+Xw8O7h4eNzcnVxcHP29/b29vUdKk17gI8HHEYSIklzd4YZMFkHRIn+/v4KUZcUN2Q7RWKlpq6Pkp9sb38CKFsEdLowOlj7wAYAEUKYmqNmaneEiJWapLZbX3ABWqMDa7A+XYgBMmddbYlMVG1ne5rN2efAw8qtr7bGztyyucSOmaxHTGKfrcUKP3Z0g50rRm+ClK//66oAADrz58aXut1BbqV7q9UdY6NZkMVZfrHv8PP9zy5rns6Npsx3lLsjgsPirQ730lT1yEOxppF/gagWAAAAFnRSTlMA7Dv3Szud5vS/6UsY4u+dv7/v752dSino+wAAAf1JREFUOI29kllT2zAUhZMMJCEZoNDWshTL+77vduw4+06htP3//6UK40AIvLZn9KCZ8+ke6eo2Gv9Vre+9dDhMO+3LT+1+t/Bj27aLMALNi4/+l+lqNNqxTFWFosWjq3O/64+mruuyTBIGAYec6P7MZ4cbj8jdrfOA42Te5G/e1feHrnKQmyvLmBAD1YxOUvrT0UZRtslitkjWPxOZAAPekd5u2l1NPWWLZw/a752nLMcBAaCkNl/fX4xYz8MzTdMkZvVSYjCgKISO/fjm26z74+A/M/kj660tmQAQlO0a6MUx6y4fCPAH+wz7CT0AXCi6xpIC4ZlH39p2gxPAj8n1USZRKhAqIGhXTHsZvG8wBPZ35P9KtEpiqLFNyCoGGa0wBI9IUycsFuDPgXSYlJVlY2zub7HeY4JnR9KWFkNdMKQ4yYYS6iLifbj6dNSoKFjdmqgHYky54/jMVlxCJAFAJAgLfK3NXAJrAEn+3YIUh3k80xChiVB3bBax1Y2eSTLRjcEfS2lojHPVD2do/KY0GhcSA6vknMCn4F5JiDTEEvKAP2377yKTBVCmqZoSOk6DWldF9S704G4IRMCqVfRlED13o/U19KRIHxhyHlkqGc+SZFUBByVxDiiUYK7c5/ctInKCIiiZfJWp//RP/SjfS0IQta5bX1q/zP9BQ3ZVAkui7P6AAAAAElFTkSuQmCC" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-
-    <!-- Tus estilos -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="main-layout">
+    <div class="menu-toggle" id="menuBtn">☰</div>
 
-    <!-- Botón Hamburguesa -->
-    <div class="menu-toggle">☰</div>
-
-    <!-- Barra con titúlo -->
-    <div class="bar">
-        <h1 class='page-title'></h1>
-    </div>
-
-    <!-- Barra lateral -->
-    <div class="sidebar">
-
-        <div class='header'>
-            <h1 class='heading'>INTELIGENCIA DE OPERACIONES</h1>
-            <img src='https://www.alvaco.com.mx/munelocos/assets/images/logo-muelocos.png'/>
-        </div>
-        
-    <!-- Barra de pestañas -->
-    <div class='tabs'>
-        <div class='tab-link active' data-tab='tab00'>
-            <i class='fa fa-bars'></i>
-            Menu
-        </div>
-        <div class='tab-link blue-3' data-tab='tab0'>
-            <i class='fa fa-sitemap'></i>
-            Estructura Operativa
-        </div>
-        <div class='tab-link blue-4' data-tab='tab1'>
-            <i class='fa fa-chart-line'></i>
-            Ventas y Objetivos
-        </div>
-        <div class='tab-link blue-5' data-tab='tab4'>
-            <i class='fa fa-eye'></i>
-            Indicadores
-        </div>
-        <div class='tab-link blue-6' data-tab='tab2'>
-            <i class='fa fa-cogs'></i> 
-            Controles Operativos
-        </div>
-        <div class='tab-link blue-9' data-tab='tab6'>
-            <i class='fa fa-chart-bar'></i> 
-            Analisis
-        </div>
-        <div class='tab-link blue-12' data-tab='tab15'>
-            <i class='fa fa-flag-usa'></i> 
-            PayOut
-        </div>
-        <div class='tab-link blue-11' data-tab='tab8'>
-            <i class='fa fa-file-powerpoint'></i> 
-            Presentaciones
-        </div>
-        <a href="https://app.powerbi.com/links/pRZI27TcgP?ctid=923eb367-abae-4010-9989-b7cf33fb74a7&pbi_source=linkShare" target="_blank" class='tab-link blue-2'>
-            <i class='fa fa-search fa-lg'></i>
-            <span>Buscador</span>
-        </a>
-    </div>
-
-    </div>  
-    
-
-    <div class="container">
-
-        <!-- Pestaña 00 -->
-        <div id="tab00" class="tab-content active">
-            <!-- <iframe src="https://www.alvaco.com.mx/munelocos/" width="200%" height="" frameborder="0"></iframe> -->
-        </div>
-
-        <!-- Pestaña 0 -->
-        <div id='tab0' class='tab-content'>
-            <button class='btn-big red fade-in' onclick="document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active')); document.getElementById('tab9').classList.add('active');">
-                <i class='fa fa-map-marked-alt'></i>
-                <span class='label'>Regiones</span>
-            </button>
+    <div class="main-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class='header'>
+                <h1 class='heading'>INTELIGENCIA DE OPERACIONES</h1>
+                <img src='https://www.alvaco.com.mx/munelocos/assets/images/logo-muelocos.png'/>
+            </div>
             
-            <button class='btn-big red fade-in' onclick="window.open('https://alvacomexico.sharepoint.com/:x:/s/ANALISISYOPTIMIZACIONOPERATIVA/EV_uVKFDOItLrtkUoaY9x4QBrAa2o7Uvkf94kfiA40t2TQ?e=GZjrX9', '_blank')">
-                <i class='fa fa-globe-americas'></i>
-                <span class='label'>Regionales</span>
-            </button>
-            
-            
-            <button class='btn-big red fade-in' onclick="window.open('https://alvacomexico.sharepoint.com/:x:/s/ANALISISYOPTIMIZACIONOPERATIVA/EZxOAUJHZp9FvDSP0z_l5H4BgxLmU9nBOEgz7MAG-703BA?e=WWpa5q', '_blank')">
-                <i class='fa fa-route'></i>
-                <span class='label'>Rutas</span>
-            </button>
+            <nav class='tabs'>
+                <div class='tab-link active' data-tab='tab00'><i class='fa fa-bars'></i> Menu</div>
+                <div class='tab-link' data-tab='tab0'><i class='fa fa-sitemap'></i> Estructura Operativa</div>
+                <div class='tab-link' data-tab='tab1'><i class='fa fa-chart-line'></i> Ventas y Objetivos</div>
+                <div class='tab-link' data-tab='tab4'><i class='fa fa-eye'></i> Indicadores</div>
+                <div class='tab-link' data-tab='tab2'><i class='fa fa-cogs'></i> Controles Operativos</div>
+                <div class='tab-link' data-tab='tab6'><i class='fa fa-chart-bar'></i> Analisis</div>
+                <div class='tab-link' data-tab='tab15'><i class='fa fa-flag-usa'></i> PayOut</div>
+                <div class='tab-link' data-tab='tab8'><i class='fa fa-file-powerpoint'></i> Presentaciones</div>
+                <a href="https://app.powerbi.com/links/pRZI27TcgP?ctid=923eb367-abae-4010-9989-b7cf33fb74a7" target="_blank" class='tab-link'>
+                    <i class='fa fa-search fa-lg'></i> <span>Buscador</span>
+                </a>
+            </nav>
+        </aside>
 
-            <button class='btn-big red fade-in' onclick="document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active')); document.getElementById('tab10').classList.add('active');">
-                <i class='fa fa-map-marked-alt'></i>
-                <span class='label'>Proceso de visitas y diagramas</span>
-            </button>
+        <main class="main-body">
+            <header class="bar">
+                <h1 class='page-title'>Munelocos Home</h1>
+            </header>
+
+            <div class="container">
+                <!-- TAB PRINCIPAL -->
+                <div id="tab00" class="tab-content active">
+                    <iframe src="https://www.alvaco.com.mx/munelocos/" frameborder="0" class="web-frame"></iframe>
+                </div>
                 
-            <button class='btn-big red fade-in' onclick="window.open('https://app.powerbi.com/links/0Jw-CaTl6H?ctid=923eb367-abae-4010-9989-b7cf33fb74a7&pbi_source=linkShare', '_blank')" >
-                <i class='fa fa-headset'></i>
-                <span class='label'>HC de operación</span>
-            </button>
-            
-            <button class='btn-big red fade-in' onclick="window.open('https://alvacomexico.sharepoint.com/:x:/s/InformacinparaPresentacin/EUOdmRtrTVxNiOClEWIlVrgBUJ1jtmXv4QvEjVcuIR4Mhw?e=HrTfGd', '_blank')">
-                <i class='fa fa-cogs'></i>
-                <span class='label'>Infraestructura</span>
-            </button>
-            
-            <button class='btn-small red-light fade-in' onclick="window.open('https://alvacomexico.sharepoint.com/:x:/s/InformacinparaPresentacin/EQzdigOi_TZIiAlGwnK6HJsBPEftZcMulylUIG6sz5lHxg?e=EgflN6', '_blank')" >
-                <i class='fa fa-users'></i>
-                <span class='label'>Vacantes</span>
-            </button>
+                <!-- TAB ESTRUCTURA OPERATIVA -->
+                <div id='tab0' class='tab-content'>
+                    <button class='btn-big' onclick="showTab('tab9', 'Mapa de Regiones')"><i class='fa fa-map-marked-alt'></i><span class='label'>Regiones</span></button>
+                    <button class='btn-big' onclick="window.open('https://alvacomexico.sharepoint.com/:x:/s/ANALISISYOPTIMIZACIONOPERATIVA/EV_uVKFDOItLrtkUoaY9x4QBrAa2o7Uvkf94kfiA40t2TQ?e=GZjrX9', '_blank')"><i class='fa fa-globe-americas'></i><span class='label'>Regionales</span></button>
+                    <button class='btn-big' onclick="window.open('https://alvacomexico.sharepoint.com/:x:/s/ANALISISYOPTIMIZACIONOPERATIVA/EZxOAUJHZp9FvDSP0z_l5H4BgxLmU9nBOEgz7MAG-703BA?e=WWpa5q', '_blank')"><i class='fa fa-route'></i><span class='label'>Rutas</span></button>
+                    <button class='btn-big' onclick="showTab('tab10', 'Diagramas de Procesos')"><i class='fa fa-project-diagram'></i><span class='label'>Proceso de visitas</span></button>
+                    <button class='btn-big' onclick="window.open('https://app.powerbi.com/links/0Jw-CaTl6H?ctid=923eb367-abae-4010-9989-b7cf33fb74a7', '_blank')"><i class='fa fa-headset'></i><span class='label'>HC de operación</span></button>
+                    <button class='btn-big' onclick="window.open('https://alvacomexico.sharepoint.com/:x:/s/InformacinparaPresentacin/EUOdmRtrTVxNiOClEWIlVrgBUJ1jtmXv4QvEjVcuIR4Mhw?e=HrTfGd', '_blank')"><i class='fa fa-cogs'></i><span class='label'>Infraestructura</span></button>
+                    <button class='btn-big' onclick="window.open('https://alvacomexico.sharepoint.com/:x:/s/InformacinparaPresentacin/EQzdigOi_TZIiAlGwnK6HJsBPEftZcMulylUIG6sz5lHxg?e=EgflN6', '_blank')"><i class='fa fa-users'></i><span class='label'>Vacantes</span></button>
+                    <button class='btn-big disabled'><i class='fa fa-stopwatch'></i><span class='label'>Tiempos de rutas</span></button>
+                    <button class='btn-big disabled'><i class='fa fa-building'></i><span class='label'>Oficinas</span></button>
+                </div>
 
-            <button class='btn-big red fade-in' onclick="document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active')); document.getElementById('tab14').classList.add('active');">
-                <i class='fa-solid fa-plane-arrival'></i>
-                <span class='label'>Calendario de viajes de supervisión</span>
-            </button>
-                        
-            <button class='btn-big red fade-in disabled' onclick=""' target='_blank'>
-                <i class='fa fa-stopwatch'></i>
-                <span class='label'>Tiempos de rutas <br> (En construcción)</span>
-            </button>
+                <!-- TAB VENTAS Y OBJETIVOS -->
+                <div id='tab1' class='tab-content'>
+                    <button class='btn-big' onclick="window.open('https://alvacomexico-my.sharepoint.com/:x:/g/personal/oalvarez_alvaco_com_mx/EcrSiXaBN9tOnQnGBgAmYTMB59jCeJzt90zy610cVZTyhQ?e=qVHdbg', '_blank')"><i class='fa fa-coins'></i><span class='label'>Ventas Diarias</span></button>
+                    <button class='btn-big' onclick="window.open('https://app.powerbi.com/links/PxUgFmdWol?ctid=923eb367-abae-4010-9989-b7cf33fb74a7', '_blank')"><i class='fa fa-bullseye'></i><span class='label'>Objetivos por región</span></button>
+                    <button class='btn-big' onclick="window.open('https://app.powerbi.com/links/dkY_WbTiBE?ctid=923eb367-abae-4010-9989-b7cf33fb74a7', '_blank')"><i class='fas fa-piggy-bank'></i><span class='label'>Rentabilidad</span></button>
+                    <button class='btn-big' onclick="window.open('https://app.powerbi.com/links/t-NGmIK9_G?ctid=923eb367-abae-4010-9989-b7cf33fb74a7', '_blank')"><i class='fas fa-seedling'></i><span class='label'>Crecimiento orgánico</span></button>
+                </div>
+                
+                <!-- TAB INDICADORES -->
+                <div id='tab4' class='tab-content'>
+                    <button class='btn-big' onclick="window.open('https://app.powerbi.com/reportEmbed?reportId=9652867f-d778-4501-a7b0-d54bf7247afe', '_blank')"><i class='fa fa-calendar-check'></i><span class='label'>Visitas diarias</span></button>
+                    <button class='btn-big' onclick="window.open('https://app.powerbi.com/links/K5Fazu6oNY?ctid=923eb367-abae-4010-9989-b7cf33fb74a7', '_blank')"><i class='fa fa-map'></i><span class='label'>Cobertura</span></button>
+                    <button class='btn-big' onclick="window.open('https://app.powerbi.com/links/Zgeb2HtXo7?ctid=923eb367-abae-4010-9989-b7cf33fb74a7', '_blank')"><i class='fa fa-archive'></i><span class='label'>Consumo Peluche</span></button>
+                </div>
+                
+                <!-- TAB CONTROLES OPERATIVOS -->
+                <div id='tab2' class='tab-content'>
+                    <button class='btn-big' onclick="document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active')); document.getElementById('tab13').classList.add('active');">
+                        <i class='fa fa-exclamation-circle'></i>
+                        <span class='label'>Faltantes</span>
+                    </button>
+                    
+                    <button class='btn-big' onclick="window.open('https://alvacomexico.sharepoint.com/:x:/s/ANALISISYOPTIMIZACIONOPERATIVA/EU3KXFuT4MlMuR82iHCjJG4BU_AU2VSNPRTqKEfOxaCprg?e=hodGKc', '_blank')" >
+                        <i class='fa fa-battery-half'></i>
+                        <span class='label'>Contadores botados</span>
+                    </button>
+                </div>
+                
+                <!-- TAB ANALISIS -->
+                <div id='tab6' class='tab-content'>
+                    <button class='btn-big' onclick="showTab('tab11', 'Clientes')"><i class='fa fa-id-card'></i><span class='label'>Clientes</span></button>
+                    <button class='btn-big' onclick="showTab('tab12', 'Rutas y Regiones')"><i class='fa fa-route'></i><span class='label'>Rutas y Regiones</span></button>
+                </div>
 
-            <button class='btn-big red fade-in disabled' onclick=""' target='_blank'>
-                <i class='fa fa-shuttle-van'></i>
-                <span class='label'>Camionetas <br> (En construcción)</span>
-            </button>
+                <!-- TAB PAYOUT -->
+                <div id='tab15' class='tab-content'>
+                    <button class='btn-big' onclick="window.open('https://app.powerbi.com/links/zObn7RkJvB?ctid=923eb367-abae-4010-9989-b7cf33fb74a7', '_blank')"><i class='fa fa-flag'></i><span class='label'>Reporte de PayOut</span></button>
+                    <button class='btn-big' onclick="window.open('https://app.powerbi.com/links/C_sOpFsLCU?ctid=923eb367-abae-4010-9989-b7cf33fb74a7', '_blank')"><i class='fa-solid fa-rocket'></i><span class='label'>Eq de Alto rendimiento</span></button>
+                </div>
 
-            <button class='btn-big red fade-in disabled' onclick=""'>
-                <i class='fa fa-building'></i>
-                <span class='label'>Oficinas <br> (En construcción)</span>
-            </button>
-            
-            <button class='btn-big red fade-in disabled' onclick="window.open('', '_blank')" >
-                <i class='fa-solid fa-screwdriver-wrench'></i>
-                <span class='label'>Incidencias operativas <br> (En construcción)</span>
-            </button>
-        </div>
-        
-        <!-- Pestaña 1 -->
-        <div id='tab1' class='tab-content'>
-            <button class='btn-big red fade-in' onclick="window.open('https://alvacomexico-my.sharepoint.com/:x:/g/personal/oalvarez_alvaco_com_mx/EcrSiXaBN9tOnQnGBgAmYTMB59jCeJzt90zy610cVZTyhQ?e=qVHdbg', '_blank')" >
-                <i class='fa fa-coins'></i>
-                <span class='label'>Ventas Diarias</span>
-            </button>
-            
-            <button class='btn-big red fade-in' onclick="window.open('https://app.powerbi.com/links/PxUgFmdWol?ctid=923eb367-abae-4010-9989-b7cf33fb74a7&pbi_source=linkShare&bookmarkGuid=1d240250-9cf1-4360-9420-d985bc6b51c9', '_blank')">
-                <i class='fa fa-bullseye'></i>
-                <span class='label'>Objetivos por región</span>
-            </button>
-            
-            <button class='btn-big red fade-in' onclick="window.open('https://app.powerbi.com/links/KdkLVParRC?ctid=923eb367-abae-4010-9989-b7cf33fb74a7&pbi_source=linkShare&bookmarkGuid=91e361da-7d2c-4c54-83a0-396f0aea0dd9', '_blank')">
-                <i class='fa fa-chart-bar'></i>
-                <span class='label'>Medias por marca</span>
-            </button>
-            
-            <button class='btn-big red fade-in' onclick="window.open('https://app.powerbi.com/links/1y4w47V5-j?ctid=923eb367-abae-4010-9989-b7cf33fb74a7&pbi_source=linkShare&bookmarkGuid=f73570db-8932-43e2-b71a-37b0eebf5227', '_blank')">
-                <i class='fa fa-road'></i>
-                <span class='label'>Desempeño de rutas</span>
-            </button>
-            
-            <button class='btn-big red fade-in' onclick="window.open('https://app.powerbi.com/links/KdkLVParRC?ctid=923eb367-abae-4010-9989-b7cf33fb74a7&pbi_source=linkShare&bookmarkGuid=bf720fc6-23ba-4699-956f-120cca239150', '_blank')">
-                <i class='fa fa-chart-line'></i>
-                <span class='label'>Ventas por región ultimos 3 años</span>
-            </button>
-            
-            <button class='btn-big red fade-in' onclick="window.open('https://app.powerbi.com/groups/me/reports/0eb96b51-5f44-4fc4-9ee2-7e3cd90a483a/ReportSection?ctid=923eb367-abae-4010-9989-b7cf33fb74a7&experience=power-bi', '_blank')" >
-                <i class='fa fa-city'></i>
-                <span class='label'>Ranking de ventas por ciudad</span>
-            </button>
+                <!-- TAB MAPA DE REGIONES -->
+                <div id='tab9' class='tab-content'>
+                    <div class="map-box">
+                        <h2>15 Regiones Operativas</h2>
+                        <img src="Imagenes/MapaRegional.png" alt="Mapa Regional" style="width:100%; max-width:900px; border-radius:15px;">
+                    </div>
+                </div>
 
-            <button class='btn-big red fade-in' onclick="window.open('https://app.powerbi.com/links/feaJ1yuqaB?ctid=923eb367-abae-4010-9989-b7cf33fb74a7&pbi_source=linkShare', '_blank')">
-                <i class='fas fa-bank'></i>
-                <span class='label'>Cambios Productivos</span>
-            </button>
-            
-            <button class='btn-big red fade-in' onclick="window.open('https://app.powerbi.com/links/dkY_WbTiBE?ctid=923eb367-abae-4010-9989-b7cf33fb74a7&pbi_source=linkShare', '_blank')">
-                <i class='fas fa-piggy-bank'></i>
-                <span class='label'>Rentabilidad</span>
-            </button>
-            
-            <button class='btn-big red fade-in' onclick="window.open('https://app.powerbi.com/links/t-NGmIK9_G?ctid=923eb367-abae-4010-9989-b7cf33fb74a7&pbi_source=linkShare', '_blank')">
-                <i class='fas fa-seedling'></i>
-                <span class='label'>Crecimiento organico</span>
-            </button>
-            
-            <button class='btn-big red fade-in disabled' onclick="window.open('https://app.powerbi.com/links/vsx_aLYsr6?ctid=923eb367-abae-4010-9989-b7cf33fb74a7&pbi_source=linkShare', '_blank')">
-                <i class='fa fa-balance-scale'></i>
-                <span class='label'>Renta vs Venta <br> (En construcción)</span>
-            </button>
-            
-            <button class='btn-big red fade-in disabled' onclick="window.open('https://app.powerbi.com/groups/me/reports/0eb96b51-5f44-4fc4-9ee2-7e3cd90a483a/ReportSection?ctid=923eb367-abae-4010-9989-b7cf33fb74a7&experience=power-bi', '_blank')">
-                <i class='fa fa-star'></i>
-                <span class='label'>Ranking de ventas por región<br> (En construcción) </span>
-            </button>
+                <!-- TAB DIAGRAMAS DE PROCESOS -->
+                <div id='tab10' class='tab-content'>
 
-            <button class='btn-big red fade-in disabled' onclick="window.open('https://app.powerbi.com/links/BRGTSpWOks?ctid=923eb367-abae-4010-9989-b7cf33fb74a7&pbi_source=linkShare', '_blank')">
-                <i class='fa-solid fa-circle-dollar-to-slot'></i>
-                <span class='label'>Equipos con ingreso en cero <br> (En construcción)</span>
-            </button>
-        
-        </div>
-        
-        <!-- Pestaña 2 -->
-        <div id='tab2' class='tab-content'>
-        
-            <button class='btn-big red fade-in' onclick="document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active')); document.getElementById('tab13').classList.add('active');">
-                <i class='fa fa-exclamation-circle'></i>
-                <span class='label'>Faltantes</span>
-            </button>
+                    <button class='btn-big'  onclick="window.open('https://alvacomexico.sharepoint.com/:p:/s/ANALISISYOPTIMIZACIONOPERATIVA/EdVX8YWW43RNuaLIt8l4OY8BFlPbs18lsLMI7RMG8SZTRw?e=X93GI8', '_blank')">
+                        <i class='fa fa-note-sticky'></i>
+                        <span class='label'>Proceso de visitas PPT</span>
+                    </button>
             
-            <button class='btn-big red fade-in' onclick="window.open('https://alvacomexico.sharepoint.com/:x:/s/ANALISISYOPTIMIZACIONOPERATIVA/EU3KXFuT4MlMuR82iHCjJG4BU_AU2VSNPRTqKEfOxaCprg?e=hodGKc', '_blank')" >
-                <i class='fa fa-battery-half'></i>
-                <span class='label'>Contadores botados</span>
-            </button>
-        
-        </div>
-        
-        <!-- Pestaña 4 -->
-        <div id='tab4' class='tab-content'>
-        
-            <button class='btn-small red-light fade-in' onclick="window.open('https://app.powerbi.com/reportEmbed?reportId=9652867f-d778-4501-a7b0-d54bf7247afe&autoAuth=true', '_blank')">
-                <i class='fa fa-calendar-check'></i>
-                <span class='label'>Visitas diarias</span>
-            </button>
+                    <button class='btn-big' onclick="window.open('https://alvacomexico.sharepoint.com/:f:/s/InformacinparaPresentacin/EsZ_EIellidHjcGedaf6j4QBqhG-NXJ2DkeDrhPMNCekFA?e=abbFsQ', '_blank')">
+                        <i class='fa fa-folder'></i>
+                        <span class='label'>Proceso de visitas Word</span>
+                    </button>
             
-            <button class='btn-big red fade-in' onclick="window.open('https://app.powerbi.com/links/K5Fazu6oNY?ctid=923eb367-abae-4010-9989-b7cf33fb74a7&pbi_source=linkShare', '_blank')">
-                <i class='fa fa-map'></i>
-                <span class='label'>Cobertura de visitas</span>
-            </button>
-
-            <button class='btn-big red fade-in' onclick="window.open('https://app.powerbi.com/links/5Y_7P_rDuz?ctid=923eb367-abae-4010-9989-b7cf33fb74a7&pbi_source=linkShare', '_blank')">
-                <i class='fas fa-sync-alt'></i>
-                <span class='label'>Frecuencia de visitas</span>
-            </button>
+                    <button class='btn-big'  onclick="window.open('https://lucid.app/lucidchart/acfc1602-661b-4a6c-b4e6-f8451c1fd6b4/edit?viewport_loc=915%2C909%2C4339%2C2126%2C8JCEzA7nv0qN&invitationId=inv_36bc67da-7204-402b-8d3a-defedb51db15', '_blank')">
+                        <i class='fa fa-paperclip'></i>
+                        <span class='label'>Proceso de visitas luchidchart</span>
+                    </button>
             
-            <button class='btn-big blue fade-in flip-animation' onclick="window.open('https://app.powerbi.com/links/Zgeb2HtXo7?ctid=923eb367-abae-4010-9989-b7cf33fb74a7&pbi_source=linkShare', '_blank')" >
-                <i class='fa fa-archive'></i>
-                <span class='label'>Consumo de peluche</span>
-            </button>
+                    <button class='btn-big'  onclick="window.open('https://lucid.app/lucidchart/6a2ef285-fd6e-47f5-bbc1-7f6e7ccd1693/edit?beaconFlowId=B09CDA2ECCA483B3&invitationId=inv_00e71e32-c149-46f8-ae6b-2611865c64cb&page=nVTQbryCnchX#', '_blank')">
+                        <i class='fa fa-paperclip'></i>
+                        <span class='label'>Organigrama por región</span>
+                    </button>
+                </div>
 
-            <button class='btn-big blue fade-in flip-animation' onclick="window.open('https://app.powerbi.com/links/GXr4Ts2V2S?ctid=923eb367-abae-4010-9989-b7cf33fb74a7&pbi_source=linkShare', '_blank')" >
-                <i class='fa fa-box-open'></i>
-                <span class='label'>Abasto de peluche</span>
-            </button>
+                <!-- TAB CLIENTES -->
+                <div id='tab11' class='tab-content'>
+
+                    <button class='btn-big' onclick="window.open('https://app.powerbi.com/links/05ep3zmrJ1?ctid=923eb367-abae-4010-9989-b7cf33fb74a7&pbi_source=linkShare', '_blank')">
+                        <i class='fa fa-film'></i>
+                        <span class='label'>Cinemex</span>
+                    </button>
             
-            <button class='btn-big red fade-in disabled' onclick="window.open('https://alvacomexico-my.sharepoint.com/:x:/g/personal/mmora_alvaco_com_mx/ERI6zoOrfL5Eu3W8ET1HCN0Bq_FLeSIQtA6li_4h8VxAPQ?e=ovQ7vr', '_blank')">
-                <i class='fa fa-cogs'></i>
-                <span class='label'>Implementación ALVACO 360</span>
-            </button>
-        
-        </div>
-        
-        <!-- Pestaña 6 -->
-        <div id='tab6' class='tab-content'>
-
-            <button class='btn-big red fade-in' onclick="document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active')); document.getElementById('tab11').classList.add('active');">
-                <i class='fa fa-id-card'></i>
-                <span class='label'>Clientes</span>
-            </button>
-
-            <button class='btn-big red fade-in' onclick="document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active')); document.getElementById('tab12').classList.add('active');">
-                <i class='fa fa-route'></i>
-                <span class='label'>Rutas y Regiones</span>
-            </button>
-        
-        </div>
-        
-        <!-- Pestaña 8 -->
-        <div id='tab8' class='tab-content'>
-        
-            <button class='btn-big red fade-in' onclick="window.open('https://alvacomexico.sharepoint.com/:f:/s/InformacinparaPresentacin/Ev3BEuajf6dEoIz4VCAvwZ0BZvtJkUosBeQjXnFsNliSbQ?e=ODfVIb', '_blank')">
-                <i class='fa fa-chalkboard'></i>
-                <span class='label'>Presentaciones</span>
-            </button>
-        
-        </div>
-        
-        <!-- Pestaña 9: Imagen Base64 -->
-        
-        <div id='tab9' class='tab-content' style='padding:30px; text-align:center; flex-direction:column; align-items:center; justify-content:center;'> 
-            <div style='max-width:1100px; width:100%; background:#fff; border-radius:20px; box-shadow:0 6px 18px rgba(0,0,0,0.15); padding:35px;'> 
-                <h2 style='margin-bottom:25px; font-size:30px; font-weight:700; color:#276749;'>15 Regiones operativas nivel nacional y C.A.</h2> 
-                    <img src='Imagenes/MapaRegional.png' alt='Mapa Regional'>
-                </div> 
-        </div>
-        
-        <!-- Pestaña 10 -->
-        <div id='tab10' class='tab-content'>
-        
-            <button class='btn-small green-orange fade-in' onclick="window.open('https://alvacomexico.sharepoint.com/:p:/s/ANALISISYOPTIMIZACIONOPERATIVA/EdVX8YWW43RNuaLIt8l4OY8BFlPbs18lsLMI7RMG8SZTRw?e=X93GI8', '_blank')">
-                <i class='fa fa-note-sticky'></i>
-                <span class='label'>Proceso de visitas PPT</span>
-            </button>
+                    <button class='btn-big' onclick="window.open('https://alvacomexico-my.sharepoint.com/:x:/g/personal/raquel_velazquez_alvaco_com_mx/EQ_v3KhIZpFEj8V8xE0UlFcBICFJhEtUmshJ1ESATXQazg?e=AvqpKq', '_blank')">
+                        <i class='fa fa-store'></i>
+                        <span class='label'>Tiendas Neto</span>
+                    </button>
             
-            <button class='btn-small green-orange fade-in' onclick="window.open('https://alvacomexico.sharepoint.com/:f:/s/InformacinparaPresentacin/EsZ_EIellidHjcGedaf6j4QBqhG-NXJ2DkeDrhPMNCekFA?e=abbFsQ', '_blank')">
-                <i class='fa fa-folder'></i>
-                <span class='label'>Proceso de visitas Word</span>
-            </button>
-            
-            <button class='btn-small green-orange fade-in' onclick="window.open('https://lucid.app/lucidchart/acfc1602-661b-4a6c-b4e6-f8451c1fd6b4/edit?viewport_loc=915%2C909%2C4339%2C2126%2C8JCEzA7nv0qN&invitationId=inv_36bc67da-7204-402b-8d3a-defedb51db15', '_blank')">
-                <i class='fa fa-paperclip'></i>
-                <span class='label'>Proceso de visitas luchidchart</span>
-            </button>
-            
-            <button class='btn-small green-orange fade-in' onclick="window.open('https://lucid.app/lucidchart/6a2ef285-fd6e-47f5-bbc1-7f6e7ccd1693/edit?beaconFlowId=B09CDA2ECCA483B3&invitationId=inv_00e71e32-c149-46f8-ae6b-2611865c64cb&page=nVTQbryCnchX#', '_blank')">
-                <i class='fa fa-paperclip'></i>
-                <span class='label'>Organigrama por región</span>
-            </button>
-        </div>
+                    <button class='btn-big' onclick="window.open('https://alvacomexico.sharepoint.com/:f:/s/ANALISISYOPTIMIZACIONOPERATIVA/EvSNL2vTDbpArWnf9Yyo_7QBbtyszo9cWPe_MyS0usJdFA?e=ijrfLY', '_blank')">
+                        <i class='fa fa-map-marker-alt'></i><span class='label'>Locales</span>
+                    </button>
 
-            <!-- Pestaña 11 -->
-        <div id='tab11' class='tab-content'>
-        
-            <button class='btn-small green-orange fade-in' onclick="window.open('https://app.powerbi.com/links/05ep3zmrJ1?ctid=923eb367-abae-4010-9989-b7cf33fb74a7&pbi_source=linkShare', '_blank')">
-                <i class='fa fa-film'></i>
-                <span class='label'>Cinemex</span>
-            </button>
-            
-            <button class='btn-small green-orange fade-in' onclick="window.open('https://alvacomexico-my.sharepoint.com/:x:/g/personal/raquel_velazquez_alvaco_com_mx/EQ_v3KhIZpFEj8V8xE0UlFcBICFJhEtUmshJ1ESATXQazg?e=AvqpKq', '_blank')">
-                <i class='fa fa-store'></i>
-                <span class='label'>Tiendas Neto</span>
-            </button>
-            
-            <button class='btn-small green-orange fade-in' onclick="window.open('https://alvacomexico.sharepoint.com/:f:/s/ANALISISYOPTIMIZACIONOPERATIVA/EvSNL2vTDbpArWnf9Yyo_7QBbtyszo9cWPe_MyS0usJdFA?e=ijrfLY', '_blank')">
-                <i class='fa fa-map-marker-alt'></i><span class='label'>Locales</span>
-            </button>
-        
-        </div>
+                </div>
 
-            <!-- Pestaña 12 -->
-        <div id='tab12' class='tab-content'>
-        
-            <button class='btn-small green-orange disabled' onclick="window.open('https://app.powerbi.com/groups/me/reports/1f92a7d2-82c1-4444-9f44-111c3350923c/caf2883089a85043cd85?ctid=923eb367-abae-4010-9989-b7cf33fb74a7&experience=power-bi', '_blank')">
-                <i class='fa fa-globe'></i>
-                <span class='label'>Rutas y Regones <br> (En construcción)</span>
-            </button>
-            
-        </div>
+                <!-- TAB RUTAS Y REGIONES -->
+                <div id='tab12' class='tab-content'>
+                    <button class='btn-big disabled' onclick="window.open('https://app.powerbi.com/groups/me/reports/1f92a7d2-82c1-4444-9f44-111c3350923c/caf2883089a85043cd85?ctid=923eb367-abae-4010-9989-b7cf33fb74a7&experience=power-bi', '_blank')">
+                        <i class='fa fa-globe'></i>
+                        <span class='label'>Rutas y Regones <br> (En construcción)</span>
+                    </button>
+                </div>
 
-                <!-- Pestaña 13 -->
-        <div id='tab13' class='tab-content'>
-        
-            <button class='btn-small green-orange fade-in' onclick="window.open('https://alvacomexico.sharepoint.com/:x:/s/Check-InEntradasER/EQjqL3ThV5JPpeUlWG7Q1q8BUZ0TsZyEfOt8Rq4W1--TSQ?e=zTudAs', '_blank')">
-                <i class='fa fa-exclamation-triangle'></i>
-                <span class='label'>Faltantes Excel</span>
-            </button>
+                <!-- TAB PRESENTACIONES -->
+                <div id='tab8' class='tab-content'>
+                    <button class='btn-big' onclick="window.open('https://alvacomexico.sharepoint.com/:f:/s/InformacinparaPresentacin/Ev3BEuajf6dEoIz4VCAvwZ0BZvtJkUosBeQjXnFsNliSbQ?e=ODfVIb', '_blank')">
+                        <i class='fa fa-chalkboard'></i>
+                        <span class='label'>Presentaciones</span>
+                    </button>
+                </div>
 
-            <button class='btn-small green-orange fade-in' onclick="window.open('https://app.powerbi.com/links/Ns0d4lo8qH?ctid=923eb367-abae-4010-9989-b7cf33fb74a7&pbi_source=linkShare', '_blank')">
-                <i class='fa fa-file-alt'></i>
-                <span class='label'>Faltantes Power Bi</span>
-            </button>
-            
-        </div>
 
-        <!-- Pestaña 14 -->
-        <div id='tab14' class='tab-content'>
-        
-            <button class='btn-small green-orange disabled' onclick="window.open('', '_blank')">
-                <i class='fa-solid fa-calendar-check'></i>
-                <span class='label'>Juan Carlos López</span>
-            </button>
+                <!-- TAB FALTANTES -->
+                <div id='tab13' class='tab-content'>
+                
+                    <button class='btn-big' onclick="window.open('https://alvacomexico.sharepoint.com/:x:/s/Check-InEntradasER/EQjqL3ThV5JPpeUlWG7Q1q8BUZ0TsZyEfOt8Rq4W1--TSQ?e=zTudAs', '_blank')">
+                        <i class='fa fa-exclamation-triangle'></i>
+                        <span class='label'>Faltantes Excel</span>
+                    </button>
 
-            <button class='btn-small green-orange disabled' onclick="window.open('', '_blank')">
-                <i class='fa-solid fa-calendar-check'></i>
-                <span class='label'>Marco Mora</span>
-            </button>
+                    <button class='btn-big' onclick="window.open('https://app.powerbi.com/links/Ns0d4lo8qH?ctid=923eb367-abae-4010-9989-b7cf33fb74a7&pbi_source=linkShare', '_blank')">
+                        <i class='fa fa-file-alt'></i>
+                        <span class='label'>Faltantes Power Bi</span>
+                    </button>
+                    
+                </div>
 
-            <button class='btn-small green-orange disabled' onclick="window.open('', '_blank')">
-                <i class='fa-solid fa-calendar-check'></i>
-                <span class='label'>Supervisores regionales</span>
-            </button>
-
-        </div>
-
-        <!-- Pestaña 15 -->
-        
-        <div id='tab15' class='tab-content'>
-            
-            <button class='btn-big red fade-in' onclick="window.open('https://app.powerbi.com/links/zObn7RkJvB?ctid=923eb367-abae-4010-9989-b7cf33fb74a7&pbi_source=linkShare', '_blank')" >
-                <i class='fa fa-flag'></i>
-                <span class='label'>Reporte de PayOut </span>
-            </button>
-
-            <button class='btn-big red fade-in' onclick="window.open('https://app.powerbi.com/links/Fz3VokTHZ1?ctid=923eb367-abae-4010-9989-b7cf33fb74a7&pbi_source=linkShare', '_blank')" >
-                <i class='fa-solid fa-triangle-exclamation'></i>
-                <span class='label'>Equipos fuera de rango </span>
-            </button>
-            
-            <button class='btn-big red fade-in' onclick="window.open('https://app.powerbi.com/links/C_sOpFsLCU?ctid=923eb367-abae-4010-9989-b7cf33fb74a7&pbi_source=linkShare', '_blank')" >
-                <i class='fa-solid fa-rocket'></i>
-                <span class='label'>Eq de Alto rendimiento</span>
-            </button>
-
-        </div>
+            </div>
+        </main>
     </div>
-</div>
 
     <script src="scripts.js"></script>
 </body>
-
 </html>
