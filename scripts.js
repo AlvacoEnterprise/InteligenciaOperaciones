@@ -17,12 +17,7 @@
    Ejemplo: Baja California -> BCAlvaco2026
 ------------------------------------------------------------------------- */
 const USERS = [
-    { user: 'Administración',   pass: 'AdminAlvaco2026' },
-    { user: 'Baja California',  pass: 'BCAlvaco2026' },
-    { user: 'Centro Este',      pass: 'CEAlvaco2026' },
-    { user: 'Centro Occidente', pass: 'COAlvaco2026' },
-    { user: 'Operaciones',      pass: 'OpsAlvaco2026' },
-    { user: 'Sureste',          pass: 'SEAlvaco2026' },
+    { user: 'Operaciones',   pass: 'AdminAlvaco2026' },
     // ↑ agrega el resto de tus 15 regiones siguiendo el mismo formato
 ];
 
