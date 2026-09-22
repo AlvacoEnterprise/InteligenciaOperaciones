@@ -165,13 +165,21 @@
                         <!-- <iframe src="https://munelocos.com.mx/" frameborder="0" class="web-frame"></iframe> -->
                     </div>
 
+                    <!-- REPORTE INCRUSTADO: se llena por JS cuando el link sí permite iframe (ej. Publicar en la Web de Power BI) -->
+                    <div id="tabEmbed" class="tab-content">
+                        <div class="embed-toolbar">
+                            <button id="embedBack" class="embed-back"><i class="fa fa-arrow-left"></i> Volver</button>
+                            <span class="embed-title" id="embedTitle"></span>
+                        </div>
+                        <iframe id="embedFrame" class="web-frame" src="" frameborder="0" allowfullscreen></iframe>
+                    </div>
+
                     <!-- TAB ESTRUCTURA OPERATIVA -->
                     <div id='tab0' class='tab-content'>
                         <button class='btn-big' data-action="tab" data-tab="tab9" data-title="Mapa de Regiones">
                             <i class='fa fa-map-marked-alt'></i>
                             <span class='label'>Regiones</span>
                         </button>
-
                         <button class='btn-big' data-action="viewer" data-url="https://alvacomexico.sharepoint.com/sites/ANALISISYOPTIMIZACIONOPERATIVA/_layouts/15/Doc.aspx?sourcedoc={a154ee5f-3843-4b8b-aed9-14a1a63dc784}&action=embedview&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=True&wdInConfigurator=True&wdInConfigurator=True" data-title="Regionales">
                             <i class='fa fa-globe-americas'></i>
                             <span class='label'>Regionales</span>
@@ -521,29 +529,10 @@
         </div>
     </div>
 
-    <!-- ===================== VISOR EN IFRAME (modal) ===================== -->
-    <div class="viewer-overlay" id="viewerOverlay">
-        <div class="viewer-box">
-            <div class="viewer-header">
-                <span class="viewer-title" id="viewerTitle">Título</span>
-                <div class="viewer-actions">
-                    <a href="#" target="_blank" rel="noopener noreferrer" class="viewer-btn" id="viewerExternal" title="Abrir en pestaña nueva">
-                        <i class="fa fa-up-right-from-square"></i>
-                    </a>
-                    <button class="viewer-btn" id="viewerClose" title="Cerrar">
-                        <i class="fa fa-xmark"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="viewer-body">
-                <div class="viewer-loader" id="viewerLoader">
-                    <div class="spinner"></div>
-                    <span>Cargando contenido...</span>
-                </div>
-                <p class="viewer-hint">¿No carga el contenido? Algunos reportes de Power BI o SharePoint no permiten mostrarse dentro de un panel — usa <i class="fa fa-up-right-from-square"></i> para abrirlo en una pestaña nueva.</p>
-                <iframe id="viewerFrame" class="viewer-frame" src="" frameborder="0" allowfullscreen></iframe>
-            </div>
-        </div>
+    <!-- ===================== AVISO "ABRIENDO EN PESTAÑA NUEVA" ===================== -->
+    <div class="toast" id="toast">
+        <i class="fa fa-up-right-from-square"></i>
+        <span id="toastText">Abriendo…</span>
     </div>
 
     <script src="scripts.js"></script>

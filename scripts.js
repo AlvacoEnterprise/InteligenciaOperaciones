@@ -28,6 +28,56 @@ const USERS = [
 
 const SESSION_KEY = 'muñelocos_session';
 
+/* -------------------------------------------------------------------------
+   DOMINIOS QUE NUNCA SE PUEDEN MOSTRAR DENTRO DE UN IFRAME
+   -------------------------------------------------------------------------
+   Power BI, SharePoint/OneDrive y Lucidchart exigen iniciar sesión, y por
+   seguridad esas páginas de inicio de sesión de Microsoft (y de Lucid)
+   bloquean que se muestren dentro de un iframe ajeno — es una protección
+   anti-clickjacking del lado de ellos, no algo que se pueda evitar desde
+   aquí. Para esos casos, en vez de mostrar un panel en blanco, se abre
+   directamente una pestaña nueva.
+------------------------------------------------------------------------- */
+const NO_EMBED_HOSTS = [
+    'powerbi.com',
+    'sharepoint.com',
+    'live.com',
+    'office.com',
+    'lucid.app',
+    'lucidchart.com',
+];
+
+function shouldEmbed(url) {
+    try {
+        const u = new URL(url);
+        const host = u.hostname.toLowerCase();
+
+        // Excepciones: enlaces hechos específicamente para insertarse en un
+        // sitio (todos vienen del botón "Insertar" / "Embed" de cada
+        // herramienta, no de "Compartir"):
+        //  · Power BI  /view?r=...        → "Publicar en la Web" (público)
+        //  · Power BI  /reportEmbed?...   → "Insertar informe" (autoAuth,
+        //                                    usa la sesión de Microsoft 365
+        //                                    que la persona ya tiene abierta)
+        //  · Excel/Word/PowerPoint Online → su propio "Insertar" trae
+        //                                    "action=embedview" en el link
+        //  · OneDrive personal            → onedrive.live.com/embed
+        if (host === 'app.powerbi.com' && (u.pathname.startsWith('/view') || u.pathname.startsWith('/reportEmbed'))) {
+            return true;
+        }
+        if (host.endsWith('sharepoint.com') && u.searchParams.get('action') === 'embedview') {
+            return true;
+        }
+        if (host === 'onedrive.live.com' && u.pathname.startsWith('/embed')) {
+            return true;
+        }
+
+        return !NO_EMBED_HOSTS.some(blocked => host === blocked || host.endsWith('.' + blocked));
+    } catch {
+        return false;
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 
     /* ============================ LOGIN ============================ */
@@ -145,39 +195,62 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    /* ===================== VISOR EN IFRAME (modal) ===================== */
-    const viewerOverlay  = document.getElementById('viewerOverlay');
-    const viewerFrame    = document.getElementById('viewerFrame');
-    const viewerTitle    = document.getElementById('viewerTitle');
-    const viewerExternal = document.getElementById('viewerExternal');
-    const viewerLoader   = document.getElementById('viewerLoader');
-    const viewerClose    = document.getElementById('viewerClose');
+    /* ===================== REPORTE INCRUSTADO (fijo en la página, como el tab00) ===================== */
+    const embedFrame = document.getElementById('embedFrame');
+    const embedTitleEl = document.getElementById('embedTitle');
+    const embedBack = document.getElementById('embedBack');
 
-    function openViewer(url, title) {
-        viewerTitle.textContent = title || 'Contenido';
-        viewerExternal.href = url;
-        viewerLoader.classList.add('active');
-        viewerFrame.src = url;
-        viewerOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
+    let lastTabId = 'tab00';
+    let lastTabTitle = 'Menu';
+
+    function openEmbedded(url, title) {
+        // Recuerda desde dónde llegamos, para que "Volver" regrese ahí
+        const current = document.querySelector('.tab-content.active');
+        if (current && current.id !== 'tabEmbed') {
+            lastTabId = current.id;
+            const activeLink = document.querySelector('.tab-link.active');
+            lastTabTitle = activeLink ? activeLink.textContent.trim() : pageTitle.textContent;
+        }
+
+        embedFrame.src = url;
+        embedTitleEl.textContent = title || '';
+        showTab('tabEmbed', title || 'Reporte');
     }
 
-    function closeViewer() {
-        viewerOverlay.classList.remove('active');
-        viewerFrame.src = 'about:blank';
-        document.body.style.overflow = '';
+    if (embedBack) {
+        embedBack.addEventListener('click', () => showTab(lastTabId, lastTabTitle));
     }
 
-    viewerFrame.addEventListener('load', () => viewerLoader.classList.remove('active'));
-    viewerClose.addEventListener('click', closeViewer);
+    /* ===================== ABRIR EN PESTAÑA NUEVA (con aviso) ===================== */
+    const toast = document.getElementById('toast');
+    const toastText = document.getElementById('toastText');
+    let toastTimer = null;
 
-    viewerOverlay.addEventListener('click', (e) => {
-        if (e.target === viewerOverlay) closeViewer();
-    });
+    function showToast(message) {
+        toastText.textContent = message;
+        toast.classList.add('active');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove('active'), 2200);
+    }
 
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && viewerOverlay.classList.contains('active')) closeViewer();
-    });
+    function openExternal(url, title) {
+        // window.open debe llamarse de forma síncrona dentro del evento de clic,
+        // si no el navegador lo trata como pop-up y lo bloquea.
+        window.open(url, '_blank', 'noopener');
+        showToast(`Abriendo "${title || 'reporte'}" en una pestaña nueva…`);
+    }
+
+    // Decide automáticamente: si el link permite iframe (por ejemplo, un
+    // reporte "Publicado en la Web" de Power BI), se muestra fijo en la
+    // página; si no (Power BI normal, SharePoint, Lucidchart...), se abre
+    // en pestaña nueva.
+    function openLink(url, title) {
+        if (shouldEmbed(url)) {
+            openEmbedded(url, title);
+        } else {
+            openExternal(url, title);
+        }
+    }
 
     // Delegación de eventos: cualquier botón/link con data-action
     document.addEventListener('click', (e) => {
@@ -189,18 +262,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const action = el.dataset.action;
         if (action === 'viewer') {
             e.preventDefault();
-            openViewer(el.dataset.url, el.dataset.title);
+            openLink(el.dataset.url, el.dataset.title);
         } else if (action === 'tab') {
             e.preventDefault();
             showTab(el.dataset.tab, el.dataset.title);
         }
     });
 
-    // Los tab-link del sidebar marcados con .js-viewer también abren el visor
+    // Los tab-link del sidebar marcados con .js-viewer también usan la misma lógica
     document.querySelectorAll('.tab-link.js-viewer').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
-            openViewer(link.dataset.url, link.dataset.title);
+            openLink(link.dataset.url, link.dataset.title);
         });
     });
 
@@ -246,4 +319,10 @@ document.addEventListener('DOMContentLoaded', () => {
    solo cierta gente vea ciertos botones), lo ideal es integrar un inicio de
    sesión con Azure AD / Microsoft Entra ID en vez de esta lista de
    contraseñas en texto plano.
+
+   Por la misma razón, los reportes de Power BI, SharePoint/OneDrive y
+   Lucidchart NO se pueden mostrar dentro de un panel/iframe: sus páginas de
+   inicio de sesión bloquean activamente que se les incruste en otro sitio
+   (protección anti-clickjacking). Por eso esos enlaces se abren en una
+   pestaña nueva (ver NO_EMBED_HOSTS arriba) en vez de en el visor.
    ========================================================================= */

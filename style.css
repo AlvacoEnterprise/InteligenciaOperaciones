@@ -366,66 +366,50 @@ body {
 .map-box { background: white; padding: 32px; border-radius: var(--radius-lg); text-align: center; width: 100%; box-shadow: var(--shadow-soft); }
 .map-box h2 { font-family: 'Playfair Display', serif; color: var(--primary); margin-bottom: 18px; }
 
-/* ============================= VISOR EN IFRAME (modal) ============================= */
-.viewer-overlay {
-    position: fixed; inset: 0; z-index: 2000;
-    background: rgba(6, 2, 32, 0.65);
-    backdrop-filter: blur(4px);
-    display: flex; align-items: center; justify-content: center;
-    opacity: 0; pointer-events: none;
-    transition: 0.25s ease;
-    padding: 26px;
+/* ============================= REPORTE INCRUSTADO (fijo, como el tab00) ============================= */
+/* Se "come" el padding del contenedor para aprovechar toda la pantalla */
+#tabEmbed {
+    flex-direction: column; gap: 12px;
+    margin: -36px -40px -60px;
+    padding: 18px 24px 24px;
+    min-height: 100vh;
 }
-.viewer-overlay.active { opacity: 1; pointer-events: all; }
 
-.viewer-box {
-    width: 100%; max-width: 1180px; height: 88vh;
-    background: white; border-radius: var(--radius-lg);
+.embed-toolbar {
+    display: flex; align-items: center; gap: 16px;
+    width: 100%; flex-shrink: 0;
+}
+.embed-back {
+    display: flex; align-items: center; gap: 8px;
+    background: white; border: 1px solid rgba(15,4,70,0.08);
+    color: var(--primary); font-weight: 900; font-size: 0.8rem; text-transform: uppercase;
+    padding: 10px 16px; border-radius: 999px; cursor: pointer;
+    box-shadow: var(--shadow-soft); transition: 0.25s;
+}
+.embed-back:hover { background: var(--primary); color: white; transform: translateX(-3px); }
+.embed-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--primary); }
+
+#tabEmbed .web-frame { flex: 1; width: 100%; height: calc(100vh - 175px); min-height: 480px; }
+
+@media (max-width: 560px) {
+    #tabEmbed { margin: -24px -18px -50px; padding: 14px 16px 20px; }
+    #tabEmbed .web-frame { height: calc(100vh - 230px); }
+}
+
+/* ============================= AVISO "ABRIENDO EN PESTAÑA NUEVA" ============================= */
+.toast {
+    position: fixed; left: 50%; bottom: 28px; z-index: 4000;
+    transform: translateX(-50%) translateY(20px);
+    display: flex; align-items: center; gap: 10px;
+    background: var(--grad-brand); color: white;
+    padding: 12px 22px; border-radius: 999px;
+    font-size: 0.85rem; font-weight: 700;
     box-shadow: var(--shadow-strong);
-    display: flex; flex-direction: column; overflow: hidden;
-    transform: scale(0.96) translateY(10px);
+    opacity: 0; pointer-events: none;
     transition: 0.3s cubic-bezier(.2,.8,.2,1);
 }
-.viewer-overlay.active .viewer-box { transform: scale(1) translateY(0); }
-
-.viewer-header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 16px 22px; background: var(--grad-brand); color: white;
-}
-.viewer-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; }
-.viewer-actions { display: flex; gap: 8px; }
-.viewer-btn {
-    width: 36px; height: 36px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.25);
-    color: white; cursor: pointer; text-decoration: none; transition: 0.25s;
-}
-.viewer-btn:hover { background: rgba(255,255,255,0.28); }
-#viewerClose:hover { background: #e0264c; border-color: #e0264c; }
-
-.viewer-body { position: relative; flex: 1; background: #f4f6fb; }
-.viewer-frame { width: 100%; height: 100%; border: none; }
-
-.viewer-loader {
-    position: absolute; inset: 0; z-index: 2;
-    display: none; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
-    background: #f4f6fb; color: var(--ink-soft); font-size: 0.85rem; font-weight: 700;
-}
-.viewer-loader.active { display: flex; }
-.spinner {
-    width: 40px; height: 40px; border-radius: 50%;
-    border: 4px solid rgba(15,4,70,0.12); border-top-color: var(--light);
-    animation: spin 0.9s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-
-.viewer-hint {
-    position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%);
-    z-index: 3; max-width: 90%;
-    background: rgba(15,4,70,0.92); color: white;
-    font-size: 0.72rem; padding: 8px 16px; border-radius: 999px;
-    text-align: center; box-shadow: var(--shadow-soft);
-}
+.toast.active { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast i { color: var(--accent-2); }
 
 /* ============================= MOBILE ============================= */
 .menu-toggle {
@@ -442,7 +426,6 @@ body {
     .menu-toggle { display: flex; }
     .bar { padding-left: 75px; }
     .search-wrap { min-width: 0; flex: 1; }
-    .viewer-box { height: 92vh; }
 }
 
 @media (max-width: 560px) {
