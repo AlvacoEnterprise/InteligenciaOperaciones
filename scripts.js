@@ -1,21 +1,3 @@
-/* =========================================================================
-   INTELIGENCIA DE OPERACIONES · MUÑELOCOS
-   -------------------------------------------------------------------------
-   1) Login muy sencillo (solo del lado del cliente, ver nota de seguridad
-      al final de este archivo).
-   2) Navegación por pestañas.
-   3) Visor de contenido externo (Power BI / SharePoint / Lucidchart) en
-      un iframe modal, en vez de abrir una pestaña nueva.
-   4) Buscador rápido de botones dentro de la sección activa.
-   ========================================================================= */
-
-/* -------------------------------------------------------------------------
-   1) USUARIOS Y CONTRASEÑAS
-   -------------------------------------------------------------------------
-   Agrega / edita filas aquí. Cada usuario es un objeto { user, pass }.
-   Sugerencia de patrón: "<ClaveRegión>Alvaco2026".
-   Ejemplo: Baja California -> BCAlvaco2026
-------------------------------------------------------------------------- */
 const USERS = [
     { user: 'Operaciones',   pass: 'AdminAlvaco2026' },
     // ↑ agrega el resto de tus 15 regiones siguiendo el mismo formato
@@ -46,17 +28,6 @@ function shouldEmbed(url) {
     try {
         const u = new URL(url);
         const host = u.hostname.toLowerCase();
-
-        // Excepciones: enlaces hechos específicamente para insertarse en un
-        // sitio (todos vienen del botón "Insertar" / "Embed" de cada
-        // herramienta, no de "Compartir"):
-        //  · Power BI  /view?r=...        → "Publicar en la Web" (público)
-        //  · Power BI  /reportEmbed?...   → "Insertar informe" (autoAuth,
-        //                                    usa la sesión de Microsoft 365
-        //                                    que la persona ya tiene abierta)
-        //  · Excel/Word/PowerPoint Online → su propio "Insertar" trae
-        //                                    "action=embedview" en el link
-        //  · OneDrive personal            → onedrive.live.com/embed
         if (host === 'app.powerbi.com' && (u.pathname.startsWith('/view') || u.pathname.startsWith('/reportEmbed'))) {
             return true;
         }

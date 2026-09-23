@@ -55,7 +55,7 @@ body {
 /* Foto de fondo (Otto) con efecto Ken Burns muy lento */
 .login-photo {
     position: absolute; inset: -20px;
-    background-image: url('Imagenes/otto-login-bg.jpg');
+    background-image: url('Imagenes/Otto_Garra.png');
     background-size: cover; background-position: center 20%;
     filter: blur(2px) saturate(1.05);
     animation: kenBurns 26s ease-in-out infinite alternate;
@@ -107,13 +107,24 @@ body {
 /* Foto de la peluchera Xtreme, como tarjeta decorativa */
 .login-prize-card {
     position: absolute; z-index: 1;
-    width: 150px; border-radius: 16px;
-    box-shadow: 0 18px 40px rgba(0,0,0,0.45);
-    border: 3px solid rgba(255,255,255,0.85);
+    width: 190px;
+    filter: drop-shadow(0 18px 30px rgba(0,0,0,0.5));
     bottom: 6%; left: 6%;
     transform: rotate(-8deg);
     animation: prizeFloat 5s ease-in-out infinite;
     display: none;
+}
+/* Otto con la peluchera, del lado derecho */
+.login-prize-card.otto {
+    width: 230px; border-radius: 16px;
+    border: 3px solid rgba(255,255,255,0.85);
+    bottom: 6%; left: auto; right: 6%;
+    animation: prizeFloatRight 5s ease-in-out infinite;
+    animation-delay: 1.2s;
+}
+@keyframes prizeFloatRight {
+    0%, 100% { transform: rotate(8deg) translateY(0); }
+    50%      { transform: rotate(6deg) translateY(-10px); }
 }
 @keyframes prizeFloat {
     0%, 100% { transform: rotate(-8deg) translateY(0); }
