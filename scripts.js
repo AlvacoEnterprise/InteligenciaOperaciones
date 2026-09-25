@@ -165,6 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const embedFrame = document.getElementById('embedFrame');
     const embedTitleEl = document.getElementById('embedTitle');
     const embedBack = document.getElementById('embedBack');
+    const embedOpenTab = document.getElementById('embedOpenTab');
 
     let lastTabId = 'tab00';
     let lastTabTitle = 'Menu';
@@ -180,6 +181,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         embedFrame.src = url;
         embedTitleEl.textContent = title || '';
+        // El mismo reporte, pero en una pestaña nueva del navegador
+        if (embedOpenTab) embedOpenTab.href = url;
         showTab('tabEmbed', title || 'Reporte');
     }
 

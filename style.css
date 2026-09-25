@@ -399,6 +399,15 @@ body {
 }
 .embed-back:hover { background: var(--primary); color: white; transform: translateX(-3px); }
 .embed-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--primary); }
+.embed-open {
+    margin-left: auto;
+    display: flex; align-items: center; gap: 8px;
+    background: white; border: 1px solid rgba(15,4,70,0.08);
+    color: var(--primary); font-weight: 900; font-size: 0.8rem; text-transform: uppercase;
+    padding: 10px 16px; border-radius: 999px; text-decoration: none;
+    box-shadow: var(--shadow-soft); transition: 0.25s;
+}
+.embed-open:hover { background: var(--primary); color: white; }
 
 #tabEmbed .web-frame { flex: 1; width: 100%; height: calc(100vh - 175px); min-height: 480px; }
 
